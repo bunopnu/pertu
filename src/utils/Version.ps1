@@ -1,5 +1,4 @@
 function Write-GitHubReleases($repo) {
-  # Download releases from GitHub
   $uri = "https://api.github.com/repos/$repo/releases"
   $releases = Invoke-RestMethod -Uri $uri -UseBasicParsing
 
@@ -35,4 +34,20 @@ function Find-VersionArgument($arguments) {
   }
 
   return $version
+}
+
+function Write-VersionList($manager) {
+  $currentVersion = Get-VersionContent $manager
+  $managerPath = Get-PertuManagerDir $manager
+
+  $versions = Get-ChildItem -Path $managerPath -Directory
+
+  foreach ($version in $versions) {
+    if ($currentVersion -eq $version) {
+      Write-Host "* $version"
+    }
+    else {
+      Write-Host "  $version"
+    }
+  }
 }

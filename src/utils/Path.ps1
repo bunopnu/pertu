@@ -10,6 +10,7 @@ function Get-PertuManagerVersionDir($manager, $version) {
   return "$env:USERPROFILE\.pertu\$manager\$version"
 }
 
-function Get-RebarSourceDir($version) {
-  return "$env:USERPROFILE\.pertu\rebar\$version\rebar3-$version"
+function Get-GitHubDir($manager, $repository, $version) {
+  return "$env:USERPROFILE\.pertu\$manager\$version\$repository-$version"
 }
+

@@ -18,7 +18,7 @@ Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 Expand-Archive $sourceZip -DestinationPath $rebarPath
 
 # Compile rebar3
-$sourceDirectory = Get-RebarSourceDir $version
+$sourceDirectory = Get-GitHubDir "rebar" "rebar3" $version
 Set-Location $sourceDirectory
 powershell .\bootstrap.ps1
 
