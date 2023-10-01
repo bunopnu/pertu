@@ -11,7 +11,7 @@ Remove-Item $erlangLsVersionPath -Force -Recurse -ErrorAction SilentlyContinue
 
 # Download the source code of ErlangLS
 $sourceUrl = "https://github.com/erlang-ls/erlang-ls/archive/refs/tags/$version.zip"
-$sourceZip = Join-Path -Path $erlangLsVersionPath -ChildPath "source.zip"
+$sourceZip = "$erlangLsVersionPath\source.zip"
 Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 
 # Unzip the source code

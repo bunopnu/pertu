@@ -1,6 +1,6 @@
 ## Pertu
 
-Pertu (Personal Erlang-related Tooling Utility) is a user-level, source-first version manager designed to simplify the management of different versions of Erlang-related tools on Microsoft Windows.
+Pertu (Personal Erlang-related Tooling Utility) is an user-level, source-first version manager designed to simplify the management of different versions of Erlang-related tools on Microsoft Windows.
 
 ## Features
 
@@ -25,24 +25,25 @@ To get started with Pertu, follow these steps:
 
 ## Manager Requirements
 
-Before using the `rebar3`/`erlangls` managers with Pertu, ensure you have the following prerequisites installed:
+Before using the `rebar3`/`erlangls`/`gleam` managers with Pertu, ensure you have the following prerequisites installed depending on your use case:
 
 - `rebar3`
   - Erlang/OTP
 - `erlangls`
   - Erlang/OTP
   - Rebar3
+- `gleam`
+  - Rust
+  - Cargo
 
 ## Usage
-
-Pertu provides convenient commands for managing different versions of `rebar3` and `erlangls`:
 
 ### List All Available Versions
 
 To list all available versions of a package, use the `list-all` action:
 
 ```powershell
-pertu [rebar3|erlangls] list-all
+pertu [rebar3|erlangls|gleam] list-all
 ```
 
 #### Example
@@ -56,7 +57,7 @@ pertu rebar3 list-all
 To install a specific version of a package, use the `install` action:
 
 ```powershell
-pertu [rebar3|erlangls] install <version>
+pertu [rebar3|erlangls|gleam] install <version>
 ```
 
 #### Example
@@ -70,7 +71,7 @@ pertu rebar3 install 3.22.1
 To list the versions of a package that are currently installed, use the `list` command:
 
 ```powershell
-pertu [rebar3|erlangls] list
+pertu [rebar3|erlangls|gleam] list
 ```
 
 #### Example
@@ -84,7 +85,7 @@ pertu rebar3 list
 To set a global version of a package for your user, use the `global` action:
 
 ```powershell
-pertu [rebar3|erlangls] global <version>
+pertu [rebar3|erlangls|gleam] global <version>
 ```
 
 #### Example(s)
@@ -103,7 +104,7 @@ rebar3 --version
 To remove a specific version of a package, use the `remove` action:
 
 ```powershell
-pertu [rebar3|erlangls] remove <version>
+pertu [rebar3|erlangls|gleam] remove <version>
 ```
 
 #### Example
