@@ -1,3 +1,6 @@
+# Stop the script immediately if an error occurrs
+$ErrorActionPreference = "Stop"
+
 Import-Module ".\utils\Path.ps1"
 
 # Check command-line arguments
