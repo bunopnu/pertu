@@ -5,7 +5,7 @@ Import-Module ".\utils\Version.ps1"
 $version = Find-VersionArgument $args
 
 # Check if `latest` is passed, check set it to actual latest version
-if ($version.ToLower() -eq "latest") {
+if ($version -eq "latest") {
   $version = (Get-GitHubReleases "gleam-lang/gleam")[0]
 
   Write-Host "Latest version is $version, installing..."
