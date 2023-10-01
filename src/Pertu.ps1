@@ -1,3 +1,5 @@
+Import-Module ".\src\utils\Path.ps1"
+
 # Check command-line arguments
 if ($args.Count -lt 1) {
   Write-Error "Please provide a manager to use Pertu!"
@@ -9,7 +11,7 @@ elseif ($args.Count -lt 2) {
 }
 
 # Get the home directory and environment path
-$binDirectory = "$env:USERPROFILE\.pertu\bin"
+$binDirectory = Get-PertuBin
 $environmentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
 
 # Create necessary folders if it doesn't exist
@@ -22,13 +24,8 @@ if (-Not ($environmentPath.Contains($binDirectory))) {
 }
 
 # Load manager and action
-try {
-  $manager = $args[0]
-  $action = $args[1]
-  $actionArgs = $args[2..$args.Length]
+$manager = $args[0]
+$action = $args[1]
+$actionArgs = $args[2..$args.Length]
 
-  Import-Module ".\src\managers\$manager\$action.ps1" -ArgumentList $actionArgs -ErrorAction Stop
-}
-catch {
-  Write-Error "Given manager/action doesn't exist"
-}
+Import-Module ".\src\managers\$manager\$action.ps1" -ArgumentList $actionArgs
