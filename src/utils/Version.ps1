@@ -18,7 +18,7 @@ function Write-GitHubReleases($repository) {
 
 # Function to get the version file path for a manager
 function Get-VersionFilePath($manager) {
-  return "$env:USERPROFILE\.pertu\bin\$manager-version.txt"
+  return "$env:LocalAppdata\.pertu\bin\$manager-version.txt"
 }
 
 # Function to retrieve the content of the version file for a manager
