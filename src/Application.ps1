@@ -1,4 +1,4 @@
-Import-Module ".\src\utils\Path.ps1"
+Import-Module ".\utils\Path.ps1"
 
 # Check command-line arguments
 if ($args.Count -lt 1) {
@@ -29,5 +29,5 @@ $action = $args[1]
 $actionArgs = $args[2..$args.Length]
 
 # Load the manager and action modules with specified arguments
-$managerModulePath = ".\src\managers\$manager\$action.ps1"
+$managerModulePath = ".\managers\$manager\$action.ps1"
 Import-Module $managerModulePath -ArgumentList $actionArgs

@@ -1,5 +1,5 @@
-Import-Module ".\src\utils\Path.ps1"
-Import-Module ".\src\utils\Version.ps1"
+Import-Module ".\utils\Path.ps1"
+Import-Module ".\utils\Version.ps1"
 
 # Copy files to .pertu/bin directory
 function Copy-ManagerToBin($manager, $version) {

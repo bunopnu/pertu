@@ -17,19 +17,19 @@ The codebase might not be the most elegant, as I'm not very proficient at script
 
 To get started with Pertu, follow these steps:
 
-1. Download the latest release from GitHub.
+1. Download the source code from GitHub.
 
-2. Extract the downloaded files to a directory of your choice.
+2. Extract the `src/` folder to a directory of your choice.
 
-3. Add the directory where you extracted Pertu to your system's environment path.
+3. Add the `src/` directory where you extracted Pertu to your system's environment path.
 
 ## Manager Requirements
 
 Before using the `rebar3`/`erlangls` managers with Pertu, ensure you have the following prerequisites installed:
 
-- `rebar3`:
+- `rebar3`
   - Erlang/OTP
-- `erlangls`:
+- `erlangls`
   - Erlang/OTP
   - Rebar3
 
