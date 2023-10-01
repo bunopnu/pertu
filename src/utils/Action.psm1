@@ -1,5 +1,5 @@
-using module .\Path.ps1
-using module .\Version.ps1
+using module .\Path.psm1
+using module .\Version.psm1
 
 # Copy files to .pertu/bin directory
 function Copy-ManagerToBin($manager, $version) {

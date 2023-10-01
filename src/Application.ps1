@@ -1,4 +1,4 @@
-using module .\utils\Path.ps1
+using module .\utils\Path.psm1
 
 # Stop the script immediately if an error occurrs
 $ErrorActionPreference = "Stop"

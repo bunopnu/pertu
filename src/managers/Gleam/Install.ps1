@@ -1,5 +1,5 @@
-using module ..\..\utils\Path.ps1
-using module ..\..\utils\Version.ps1
+using module ..\..\utils\Path.psm1
+using module ..\..\utils\Version.psm1
 
 # Find the specified version argument in the command-line arguments
 $version = Find-VersionArgument $args
