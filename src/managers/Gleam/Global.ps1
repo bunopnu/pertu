@@ -1,4 +1,4 @@
-Import-Module ".\utils\Action.ps1"
+using module ..\..\utils\Action.ps1
 
 # Find the specified version argument in the command-line arguments
 $version = Find-VersionArgument $args

@@ -1,4 +1,4 @@
-Import-Module ".\utils\Version.ps1"
+using module ..\..\utils\Version.ps1
 
 # Write the existing GitHub releases for Rebar3
 Write-GitHubReleases "erlang/rebar3"

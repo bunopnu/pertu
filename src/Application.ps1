@@ -1,7 +1,7 @@
+using module .\utils\Path.ps1
+
 # Stop the script immediately if an error occurrs
 $ErrorActionPreference = "Stop"
-
-Import-Module ".\utils\Path.ps1"
 
 # Check command-line arguments
 if ($args.Count -lt 1) {
