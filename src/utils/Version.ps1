@@ -25,7 +25,7 @@ function Get-VersionFilePath($manager) {
 function Get-VersionFileContent($manager) {
   try {
     $versionFile = Get-VersionFilePath $manager
-    return Get-Content -Path $versionFile -ErrorAction Stop
+    return Get-Content -Path $versionFile
   }
   catch {
     return $null

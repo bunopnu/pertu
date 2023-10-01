@@ -15,7 +15,7 @@ elseif ($args.Count -lt 2) {
 
 # Get the Pertu bin directory and the user's environment path
 $binDirectory = Get-PertuBinDirectory
-$environmentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
+$environmentPath = [Environment]::GetEnvironmentVariables("User").Path
 
 # Create the necessary folders if they do not exist
 [void](New-Item -ItemType Directory -Path $binDirectory -Force)
