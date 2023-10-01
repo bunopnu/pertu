@@ -4,6 +4,13 @@ Import-Module ".\utils\Version.ps1"
 # Find the specified version argument in the command-line arguments
 $version = Find-VersionArgument $args
 
+# Check if `latest` is passed, check set it to actual latest version
+if ($version.ToLower() -eq "latest") {
+  $version = (Get-GitHubReleases "erlang/rebar3")[0]
+
+  Write-Host "Latest version is $version, installing..."
+}
+
 # Create necessary folders for the rebar manager
 $rebarVersionPath = Get-PertuManagerVersionDirectory "rebar" $version
 Remove-Item $rebarVersionPath -Force -Recurse -ErrorAction SilentlyContinue

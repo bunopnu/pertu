@@ -1,15 +1,19 @@
-# Function to retrieve GitHub releases for a repository
-function Write-GitHubReleases($repository) {
+# Function to retrieve GitHub releases for a repository and return them
+function Get-GitHubReleases($repository) {
   $uri = "https://api.github.com/repos/$repository/releases"
   $releases = Invoke-RestMethod -Uri $uri -UseBasicParsing
+  
+  return $releases.tag_name
+}
+
+# Function to retrieve GitHub released for a repository and write them to host
+function Write-GitHubReleases($repository) {
+  $releases = Get-GitHubReleases($repository)
 
   # Reverse the array
   [array]::Reverse($releases)
 
-  # Print release versions
-  foreach ($release in $releases) {
-    Write-Host $release.tag_name
-  }
+  Write-Host $($releases -join "`n")
 }
 
 # Function to get the version file path for a manager

@@ -4,13 +4,20 @@ Import-Module ".\utils\Version.ps1"
 # Find the specified version argument in the command-line arguments
 $version = Find-VersionArgument $args
 
+# Check if `latest` is passed, check set it to actual latest version
+if ($version.ToLower() -eq "latest") {
+  $version = (Get-GitHubReleases "erlang-ls/erlang_ls")[0]
+
+  Write-Host "Latest version is $version, installing..."
+}
+ 
 # Create necessary folders for ErlangLS
 $erlangLsVersionPath = Get-PertuManagerVersionDirectory "erlang-ls" $version
 Remove-Item $erlangLsVersionPath -Force -Recurse -ErrorAction SilentlyContinue
 [void](New-Item -ItemType Directory -Path $erlangLsVersionPath -Force)
 
 # Download the source code of ErlangLS
-$sourceUrl = "https://github.com/erlang-ls/erlang-ls/archive/refs/tags/$version.zip"
+$sourceUrl = "https://github.com/erlang-ls/erlang_ls/archive/refs/tags/$version.zip"
 $sourceZip = "$erlangLsVersionPath\source.zip"
 Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 
