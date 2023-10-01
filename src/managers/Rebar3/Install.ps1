@@ -1,29 +1,29 @@
 Import-Module ".\src\utils\Path.ps1"
 Import-Module ".\src\utils\Version.ps1"
 
-# Check if version given
+# Find the specified version argument in the command-line arguments
 $version = Find-VersionArgument $args
 
-# Create necessary folders
-$rebarPath = Get-PertuManagerVersionDir "rebar" $version
-Remove-Item $rebarPath -Force -Recurse -ErrorAction SilentlyContinue
-[void](New-Item -ItemType Directory -Path $rebarPath -Force)
+# Create necessary folders for the rebar manager
+$rebarVersionPath = Get-PertuManagerVersionDirectory "rebar" $version
+Remove-Item $rebarVersionPath -Force -Recurse -ErrorAction SilentlyContinue
+[void](New-Item -ItemType Directory -Path $rebarVersionPath -Force)
 
-# Download source code
+# Download the source code of rebar3
 $sourceUrl = "https://github.com/erlang/rebar3/archive/refs/tags/$version.zip"
-$sourceZip = "$rebarPath\source.zip"
+$sourceZip = "$rebarVersionPath\source.zip"
 Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 
-# Unzip source code
-Expand-Archive $sourceZip -DestinationPath $rebarPath
+# Unzip the source code
+Expand-Archive -Path $sourceZip -DestinationPath $rebarVersionPath
 
 # Compile rebar3
-$sourceDirectory = Get-GitHubDir "rebar" "rebar3" $version
+$sourceDirectory = Get-GitHubRepositoryDirectory "rebar" "rebar3" $version
 Set-Location $sourceDirectory
 powershell .\bootstrap.ps1
 
 # Clean up
-Set-Location $rebarPath
+Set-Location $rebarVersionPath
 
 Remove-Item -Path $sourceZip
 

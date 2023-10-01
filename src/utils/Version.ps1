@@ -1,23 +1,26 @@
-function Write-GitHubReleases($repo) {
-  $uri = "https://api.github.com/repos/$repo/releases"
+# Function to retrieve GitHub releases for a repository
+function Write-GitHubReleases($repository) {
+  $uri = "https://api.github.com/repos/$repository/releases"
   $releases = Invoke-RestMethod -Uri $uri -UseBasicParsing
 
-  # Reverse array
+  # Reverse the array
   [array]::Reverse($releases)
 
-  # Print versions
+  # Print release versions
   foreach ($release in $releases) {
     Write-Host $release.tag_name
   }
 }
 
-function Get-VersionFile($manager) {
+# Function to get the version file path for a manager
+function Get-VersionFilePath($manager) {
   return "$env:USERPROFILE\.pertu\bin\$manager-version.txt"
 }
 
-function Get-VersionContent($manager) {
+# Function to retrieve the content of the version file for a manager
+function Get-VersionFileContent($manager) {
   try {
-    $versionFile = Get-VersionFile $manager
+    $versionFile = Get-VersionFilePath $manager
     return Get-Content -Path $versionFile -ErrorAction Stop
   }
   catch {
@@ -25,20 +28,22 @@ function Get-VersionContent($manager) {
   }
 }
 
+# Function to find and return the version argument from a list of arguments
 function Find-VersionArgument($arguments) {
   $version = $arguments[0]
 
   if ($null -eq $version) {
-    Write-Error "Please provide a version to run action"
+    Write-Error "Please provide a version to run the action"
     Exit
   }
 
   return $version
 }
 
-function Write-VersionList($manager) {
-  $currentVersion = Get-VersionContent $manager
-  $managerPath = Get-PertuManagerDir $manager
+# Function to write a list of available versions for a manager
+function Write-AvailableVersions($manager) {
+  $currentVersion = Get-VersionFileContent $manager
+  $managerPath = Get-PertuManagerDirectory $manager
 
   $versions = Get-ChildItem -Path $managerPath -Directory
 

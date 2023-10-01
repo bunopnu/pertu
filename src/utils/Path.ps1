@@ -1,16 +1,19 @@
-function Get-PertuBin() {
+# Function to get the Pertu bin directory
+function Get-PertuBinDirectory() {
   return "$env:USERPROFILE\.pertu\bin"
 }
 
-function Get-PertuManagerDir($manager) {
+# Function to get the directory for a Pertu manager
+function Get-PertuManagerDirectory($manager) {
   return "$env:USERPROFILE\.pertu\$manager"
 }
 
-function Get-PertuManagerVersionDir($manager, $version) {
+# Function to get the directory for a specific version of a Pertu manager
+function Get-PertuManagerVersionDirectory($manager, $version) {
   return "$env:USERPROFILE\.pertu\$manager\$version"
 }
 
-function Get-GitHubDir($manager, $repository, $version) {
+# Function to get the directory for a specific GitHub repository version
+function Get-GitHubRepositoryDirectory($manager, $repository, $version) {
   return "$env:USERPROFILE\.pertu\$manager\$version\$repository-$version"
 }
-

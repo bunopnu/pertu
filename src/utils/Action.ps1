@@ -1,33 +1,33 @@
 Import-Module ".\src\utils\Path.ps1"
 Import-Module ".\src\utils\Version.ps1"
 
-# Copy files to .pertu/bin
-function Add-Global($manager, $version) {
-  $buildDirectory = Get-PertuManagerVersionDir $manager $version
-  $binDirectory = Get-PertuBin
+# Copy files to .pertu/bin directory
+function Copy-ManagerToBin($manager, $version) {
+  $managerVersionDirectory = Get-PertuManagerVersionDirectory $manager $version
+  $binDirectory = Get-PertuBinDirectory
 
-  Get-ChildItem -Path "$buildDirectory" -File | Copy-Item -Destination "$binDirectory" -Force
+  Get-ChildItem -Path $managerVersionDirectory -File | Copy-Item -Destination $binDirectory -Force
 
-  $versionFile = Get-VersionFile $manager
-  [void](New-Item -ItemType File -Path $versionFile -Value $version -Force)
+  $versionFilePath = Get-VersionFilePath $manager
+  [void](New-Item -ItemType File -Path $versionFilePath -Value $version -Force)
 }
 
-# Remove given version
-function Remove-Version($manager, $version, $extras) {
-  $currentVersion = Get-VersionContent $manager
+# Remove a specific version of a manager
+function Remove-ManagerVersion($manager, $version, $extras) {
+  $currentVersion = Get-VersionFileContent $manager
 
-  $rebarPath = Get-PertuManagerVersionDir $manager $version
-  Remove-Item $rebarPath -Force -Recurse -ErrorAction SilentlyContinue
+  $managerVersionDirectory = Get-PertuManagerVersionDirectory $manager $version
+  Remove-Item $managerVersionDirectory -Force -Recurse -ErrorAction SilentlyContinue
 
-  # Also remove from .pertu/bin
+  # Remove from .pertu/bin directory if it's the current version
   if ($currentVersion -eq $version) {
-    $binDirectory = Get-PertuBin
-    $versionFile = Get-VersionFile $manager
+    $binDirectory = Get-PertuBinDirectory
+    $versionFilePath = Get-VersionFilePath $manager
 
     foreach ($extra in $extras) {
       Remove-Item "$binDirectory\$extra" -Force
     }
 
-    Remove-Item $versionFile -Force
+    Remove-Item $versionFilePath -Force
   }
 }

@@ -10,22 +10,24 @@ elseif ($args.Count -lt 2) {
   Exit
 }
 
-# Get the home directory and environment path
-$binDirectory = Get-PertuBin
+# Get the Pertu bin directory and the user's environment path
+$binDirectory = Get-PertuBinDirectory
 $environmentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
 
-# Create necessary folders if it doesn't exist
+# Create the necessary folders if they do not exist
 [void](New-Item -ItemType Directory -Path $binDirectory -Force)
 
-# Add .pertu/bin to the environment path if not already
+# Add .pertu/bin to the environment path if it is not already present
 if (-Not ($environmentPath.Contains($binDirectory))) {
   $environmentPath += ";$binDirectory"
   [Environment]::SetEnvironmentVariable("Path", $environmentPath, [EnvironmentVariableTarget]::User)
 }
 
-# Load manager and action
+# Get the manager and action from the command-line arguments
 $manager = $args[0]
 $action = $args[1]
 $actionArgs = $args[2..$args.Length]
 
-Import-Module ".\src\managers\$manager\$action.ps1" -ArgumentList $actionArgs
+# Load the manager and action modules with specified arguments
+$managerModulePath = ".\src\managers\$manager\$action.ps1"
+Import-Module $managerModulePath -ArgumentList $actionArgs
