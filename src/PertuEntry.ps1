@@ -1,4 +1,7 @@
-Import-Module ".\utils\Path.ps1"
+using module .\utils\Path.psm1
+
+# Stop the script immediately if an error occurrs
+$ErrorActionPreference = "Stop"
 
 # Check command-line arguments
 if ($args.Count -lt 1) {
@@ -12,7 +15,7 @@ elseif ($args.Count -lt 2) {
 
 # Get the Pertu bin directory and the user's environment path
 $binDirectory = Get-PertuBinDirectory
-$environmentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
+$environmentPath = [Environment]::GetEnvironmentVariables("User").Path
 
 # Create the necessary folders if they do not exist
 [void](New-Item -ItemType Directory -Path $binDirectory -Force)
@@ -29,5 +32,5 @@ $action = $args[1]
 $actionArgs = $args[2..$args.Length]
 
 # Load the manager and action modules with specified arguments
-$managerModulePath = ".\managers\$manager\$action.ps1"
+$managerModulePath = "$PSScriptRoot\managers\$manager\$action.ps1"
 Import-Module $managerModulePath -ArgumentList $actionArgs

@@ -1,8 +1,8 @@
-Import-Module ".\utils\Path.ps1"
-Import-Module ".\utils\Version.ps1"
+using module ..\..\utils\Path.psm1
+using module ..\..\utils\Version.psm1
 
 # Find the specified version argument in the command-line arguments
-$version = Find-VersionArgument $args
+$version = Find-VersionFromArgument $args "gleam-lang/gleam"
 
 # Create necessary folders for the rebar manager
 $gleamVersionPath = Get-PertuManagerVersionDirectory "gleam" $version

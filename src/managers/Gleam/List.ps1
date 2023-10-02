@@ -1,5 +1,5 @@
-Import-Module ".\utils\Version.ps1"
-Import-Module ".\utils\Path.ps1"
+using module ..\..\utils\Path.psm1
+using module ..\..\utils\Version.psm1
 
 # Write the list of available versions for Gleam
 Write-AvailableVersions "gleam"
