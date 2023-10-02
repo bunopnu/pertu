@@ -2,14 +2,7 @@ using module ..\..\utils\Path.psm1
 using module ..\..\utils\Version.psm1
 
 # Find the specified version argument in the command-line arguments
-$version = Find-VersionArgument $args
-
-# Check if `latest` is passed, check set it to actual latest version
-if ($version -eq "latest") {
-  $version = (Get-GitHubReleases "erlang-ls/erlang_ls")[0]
-
-  Write-Host "Latest version is $version, installing..."
-}
+$version = Find-VersionFromArgument $args "erlang-ls/erlang_ls"
  
 # Create necessary folders for ErlangLS
 $erlangLsVersionPath = Get-PertuManagerVersionDirectory "erlang-ls" $version

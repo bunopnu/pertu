@@ -33,12 +33,21 @@ function Get-VersionFileContent($manager) {
 }
 
 # Function to find and return the version argument from a list of arguments
-function Find-VersionArgument($arguments) {
+function Find-VersionFromArgument($arguments, $repository) {
+  $releases = Get-GitHubReleases $repository
   $version = $arguments[0]
 
   if ($null -eq $version) {
     Write-Error "Please provide a version to run the action"
     Exit
+  }
+  elseif ($version -eq "latest") {
+    $version = $releases[0]
+    Write-Host "Latest version is $version"
+  }
+
+  if (!$releases.Contains($version)) {
+    Write-Error "Provided version $version does not exist. To list all the available versions, please use list-all sub-command."
   }
 
   return $version
