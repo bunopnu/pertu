@@ -32,5 +32,5 @@ $action = $args[1]
 $actionArgs = $args[2..$args.Length]
 
 # Load the manager and action modules with specified arguments
-$managerModulePath = ".\managers\$manager\$action.ps1"
+$managerModulePath = "$PSScriptRoot\managers\$manager\$action.ps1"
 Import-Module $managerModulePath -ArgumentList $actionArgs
