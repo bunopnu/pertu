@@ -25,16 +25,12 @@ To get started with Pertu, follow these steps:
 
 ## Manager Requirements
 
-Before using the `rebar3`/`erlangls`/`gleam` managers with Pertu, ensure you have the following prerequisites installed depending on your use case:
+Before using Pertu, ensure you have the following prerequisites installed for that manager:
 
-- `rebar3`
-  - Erlang/OTP
-- `erlangls`
-  - Erlang/OTP
-  - Rebar3
-- `gleam`
-  - Rust
-  - Cargo
+- `rebar3`: Erlang/OTP
+- `erlangls`: Erlang/OTP and Rebar3
+- `erlperf`: Erlang/OTP and Rebar3
+- `gleam`: Rust and Cargo
 
 ## Usage
 
@@ -43,10 +39,14 @@ Before using the `rebar3`/`erlangls`/`gleam` managers with Pertu, ensure you hav
 To list all available versions of a package, use the `list-all` action:
 
 ```powershell
-pertu [rebar3|erlangls|gleam] list-all
+pertu [manager] list-all
 ```
 
 #### Example
+
+```powershell
+pertu erlangls list-all
+```
 
 ```powershell
 pertu rebar3 list-all
@@ -57,7 +57,7 @@ pertu rebar3 list-all
 To install a specific version of a package, use the `install` action:
 
 ```powershell
-pertu [rebar3|erlangls|gleam] install <version>
+pertu [manager] install <version>
 ```
 
 #### Example
@@ -66,26 +66,34 @@ pertu [rebar3|erlangls|gleam] install <version>
 pertu rebar3 install 3.22.1
 ```
 
+```powershell
+pertu gleam install latest
+```
+
 ### List Installed Versions
 
-To list the versions of a package that are currently installed, use the `list` command:
+To list the installed versions of a package, use the `list` action:
 
 ```powershell
-pertu [rebar3|erlangls|gleam] list
+pertu [manager] list
 ```
 
 #### Example
 
 ```powershell
-pertu rebar3 list
+pertu gleam list
 ```
 
-### Select Which Version to Use
+```powershell
+pertu erlperf list
+```
+
+### Select Global Version
 
 To set a global version of a package for your user, use the `global` action:
 
 ```powershell
-pertu [rebar3|erlangls|gleam] global <version>
+pertu [manager] global <version>
 ```
 
 #### Example(s)
@@ -95,19 +103,22 @@ pertu erlangls global 0.48.1
 ```
 
 ```powershell
-pertu rebar3 global 3.22.1
-rebar3 --version
+pertu rebar3 global latest
 ```
 
-### Remove a Specific Version
+### Remove Specific Version
 
 To remove a specific version of a package, use the `remove` action:
 
 ```powershell
-pertu [rebar3|erlangls|gleam] remove <version>
+pertu [manager] remove <version>
 ```
 
 #### Example
+
+```powershell
+pertu erlangls remove 0.47.0
+```
 
 ```powershell
 pertu rebar3 remove 3.22.0

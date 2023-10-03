@@ -4,7 +4,7 @@ using module ..\..\utils\Version.psm1
 # Find the specified version argument in the command-line arguments
 $version = Find-VersionFromArgument $args "gleam-lang/gleam"
 
-# Create necessary folders for the rebar manager
+# Create necessary folders for the gleam manager
 $gleamVersionPath = Get-PertuManagerVersionDirectory "gleam" $version
 Remove-Item $gleamVersionPath -Force -Recurse -ErrorAction SilentlyContinue
 [void](New-Item -ItemType Directory -Path $gleamVersionPath -Force)
