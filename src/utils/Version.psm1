@@ -1,3 +1,15 @@
+# Check if valid commit hash
+function Test-CommitHash($value) {
+  $pattern = "^[0-9a-fA-F]{7}$"
+  
+  if ($value -match $pattern) {
+    return $true
+  }
+  else {
+    return $false
+  }
+}
+
 # Function to retrieve GitHub releases for a repository and return them
 function Get-GitHubReleases($repository) {
   $uri = "https://api.github.com/repos/$repository/releases"
@@ -22,7 +34,7 @@ function Get-GitHubDownloadLink($repository, $version) {
       return "https://github.com/$repository/archive/refs/heads/$defaultBranch.zip"
     }
     Default {
-      return "https://github.com/$repository/archive/refs/tags/$version.zip"
+      return "https://github.com/$repository/archive/$version.zip"
     }
   }
 }
@@ -67,7 +79,7 @@ function Find-VersionFromArgument($arguments, $repository) {
     Write-Host "Latest version is $version"
   }
 
-  if (!$releases.Contains($version)) {
+  if (!$releases.Contains($version) -and !(Test-CommitHash $version)) {
     Write-Error "Provided version $version does not exist. To list all the available versions, please use list-all sub-command."
   }
 
