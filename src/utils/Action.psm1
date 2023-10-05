@@ -25,7 +25,7 @@ function Remove-ManagerVersion($manager, $version, $extras) {
     $versionFilePath = Get-VersionFilePath $manager
 
     foreach ($extra in $extras) {
-      Remove-Item "$binDirectory\$extra" -Force
+      Remove-Item "$binDirectory\$extra" -Force -ErrorAction Ignore
     }
 
     Remove-Item $versionFilePath -Force

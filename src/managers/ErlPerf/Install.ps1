@@ -1,8 +1,10 @@
 using module ..\..\utils\Path.psm1
 using module ..\..\utils\Version.psm1
 
+$githubRepository = "max-au/erlperf"
+
 # Find the specified version argument in the command-line arguments
-$version = Find-VersionFromArgument $args "max-au/erlperf"
+$version = Find-VersionFromArgument $args $githubRepository
  
 # Create necessary folders for ErlPerf
 $erlperfVersionPath = Get-PertuManagerVersionDirectory "erlperf" $version
@@ -10,7 +12,7 @@ Remove-Item $erlperfVersionPath -Force -Recurse -ErrorAction SilentlyContinue
 [void](New-Item -ItemType Directory -Path $erlperfVersionPath -Force)
 
 # Download the source code of ErlPerf
-$sourceUrl = "https://github.com/max-au/erlperf/archive/refs/tags/$version.zip"
+$sourceUrl = Get-GitHubDownloadLink $githubRepository $version
 $sourceZip = "$erlperfVersionPath\source.zip"
 Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 
@@ -18,7 +20,7 @@ Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 Expand-Archive -Path $sourceZip -DestinationPath $erlperfVersionPath
 
 # Compile ErlPerf
-$sourceDirectory = Get-GitHubRepositoryDirectory "erlperf" "erlperf" $version
+$sourceDirectory = Get-GitHubRepositoryDirectory "erlperf" $version
 Set-Location $sourceDirectory
 
 rebar3 as prod escriptize

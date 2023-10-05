@@ -1,8 +1,10 @@
 using module ..\..\utils\Path.psm1
 using module ..\..\utils\Version.psm1
 
+$githubRepository = "erlang/rebar3"
+
 # Find the specified version argument in the command-line arguments
-$version = Find-VersionFromArgument $args "erlang/rebar3"
+$version = Find-VersionFromArgument $args  $githubRepository
 
 # Create necessary folders for the rebar manager
 $rebarVersionPath = Get-PertuManagerVersionDirectory "rebar" $version
@@ -10,7 +12,7 @@ Remove-Item $rebarVersionPath -Force -Recurse -ErrorAction SilentlyContinue
 [void](New-Item -ItemType Directory -Path $rebarVersionPath -Force)
 
 # Download the source code of rebar3
-$sourceUrl = "https://github.com/erlang/rebar3/archive/refs/tags/$version.zip"
+$sourceUrl = Get-GitHubDownloadLink $githubRepository $version
 $sourceZip = "$rebarVersionPath\source.zip"
 Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 
@@ -18,7 +20,7 @@ Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 Expand-Archive -Path $sourceZip -DestinationPath $rebarVersionPath
 
 # Compile rebar3
-$sourceDirectory = Get-GitHubRepositoryDirectory "rebar" "rebar3" $version
+$sourceDirectory = Get-GitHubRepositoryDirectory "rebar" $version
 Set-Location $sourceDirectory
 powershell .\bootstrap.ps1
 

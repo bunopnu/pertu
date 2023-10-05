@@ -1,8 +1,10 @@
 using module ..\..\utils\Path.psm1
 using module ..\..\utils\Version.psm1
 
+$githubRepository = "gleam-lang/gleam"
+
 # Find the specified version argument in the command-line arguments
-$version = Find-VersionFromArgument $args "gleam-lang/gleam"
+$version = Find-VersionFromArgument $args $githubRepository
 
 # Create necessary folders for the gleam manager
 $gleamVersionPath = Get-PertuManagerVersionDirectory "gleam" $version
@@ -10,7 +12,7 @@ Remove-Item $gleamVersionPath -Force -Recurse -ErrorAction SilentlyContinue
 [void](New-Item -ItemType Directory -Path $gleamVersionPath -Force)
 
 # Download the source code of Gleam
-$sourceUrl = "https://github.com/gleam-lang/gleam/archive/refs/tags/$version.zip"
+$sourceUrl = Get-GitHubDownloadLink $githubRepository $version
 $sourceZip = "$gleamVersionPath\source.zip"
 Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 
@@ -18,7 +20,7 @@ Invoke-WebRequest -Uri $sourceUrl -OutFile $sourceZip
 Expand-Archive -Path $sourceZip -DestinationPath $gleamVersionPath
 
 # Compile Gleam
-$sourceDirectory = (Get-GitHubRepositoryDirectory "gleam" "gleam" $version).Replace("gleam-v", "gleam-")
+$sourceDirectory = Get-GitHubRepositoryDirectory "gleam" $version
 Set-Location $sourceDirectory
 cargo build --release
 

@@ -3,7 +3,28 @@ function Get-GitHubReleases($repository) {
   $uri = "https://api.github.com/repos/$repository/releases"
   $releases = Invoke-RestMethod -Uri $uri -UseBasicParsing
   
-  return $releases.tag_name
+  return @("main", "latest") + $releases.tag_name
+}
+
+# Function to get default branch of the GitHub repository
+function Get-GitHubDefaultBranch($repository) {
+  $uri = "https://api.github.com/repos/$repository"
+  $releases = Invoke-RestMethod -Uri $uri -UseBasicParsing
+  
+  return $releases.default_branch
+}
+
+# Function to get download link for GitHub repository
+function Get-GitHubDownloadLink($repository, $version) {
+  switch ($version) {
+    "main" {
+      $defaultBranch = Get-GitHubDefaultBranch $repository
+      return "https://github.com/$repository/archive/refs/heads/$defaultBranch.zip"
+    }
+    Default {
+      return "https://github.com/$repository/archive/refs/tags/$version.zip"
+    }
+  }
 }
 
 # Function to retrieve GitHub released for a repository and write them to host
@@ -42,7 +63,7 @@ function Find-VersionFromArgument($arguments, $repository) {
     Exit
   }
   elseif ($version -eq "latest") {
-    $version = $releases[0]
+    $version = $releases[2]
     Write-Host "Latest version is $version"
   }
 

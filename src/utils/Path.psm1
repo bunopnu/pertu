@@ -14,6 +14,9 @@ function Get-PertuManagerVersionDirectory($manager, $version) {
 }
 
 # Function to get the directory for a specific GitHub repository version
-function Get-GitHubRepositoryDirectory($manager, $repository, $version) {
-  return "$env:LocalAppData\.pertu\$manager\$version\$repository-$version"
+function Get-GitHubRepositoryDirectory($manager, $version) {
+  $sourcePath = Get-PertuManagerVersionDirectory $manager $version
+  $firstDirectory = (Get-ChildItem -Path $sourcePath -Directory | Select-Object -First 1).Name
+  
+  return "$sourcePath\$firstDirectory"
 }
