@@ -31,6 +31,7 @@ Before using Pertu, ensure you have the following prerequisites installed for th
 - `erlangls`: Erlang/OTP and Rebar3
 - `erlperf`: Erlang/OTP and Rebar3
 - `gleam`: Rust and Cargo
+- `efmt`: Rust and Cargo
 
 ## Usage
 
@@ -57,7 +58,7 @@ pertu rebar3 list-all
 To install a specific version of a package, use the `install` action:
 
 ```powershell
-pertu [manager] install <version>
+pertu [manager] install [version]
 ```
 
 #### Example
@@ -85,7 +86,7 @@ pertu gleam list
 ```
 
 ```powershell
-pertu erlperf list
+pertu efmt list
 ```
 
 ### Select Global Version
@@ -93,7 +94,7 @@ pertu erlperf list
 To set a global version of a package for your user, use the `global` action:
 
 ```powershell
-pertu [manager] global <version>
+pertu [manager] global [version]
 ```
 
 #### Example(s)
@@ -111,13 +112,13 @@ pertu rebar3 global latest
 To remove a specific version of a package, use the `remove` action:
 
 ```powershell
-pertu [manager] remove <version>
+pertu [manager] remove [version]
 ```
 
 #### Example
 
 ```powershell
-pertu erlangls remove 0.47.0
+pertu erlperf remove latest
 ```
 
 ```powershell
